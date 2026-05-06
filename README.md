@@ -83,15 +83,14 @@ Na primeira execução as imagens serão construídas e as dependências instala
 | Backend (API) | http://localhost:3000 |
 | PostgreSQL | localhost:5432 |
 
-### 4. Crie o primeiro usuário administrador
+### 4. Acesse a aplicação
 
-```bash
-curl -s -X POST http://localhost:3000/users \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Admin","email":"admin@meetroom.com","password":"123456","role":"admin"}' | jq
-```
+Acesse http://localhost:5173 e faça login com o usuário administrador padrão:
 
-Depois acesse http://localhost:5173 e faça login com as credenciais acima.
+| Campo | Valor |
+|-------|-------|
+| E-mail | `admin@meetroom.com` |
+| Senha | `12345678` |
 
 ### Comandos úteis
 
@@ -159,10 +158,48 @@ FRONTEND_URL=http://localhost:5173
 
 ---
 
-## Deploy no Render
+## Deploy
 
-Consulte o guia de deploy na wiki do projeto ou siga os passos abaixo:
+### Ambientes de produção
 
-1. Crie um **PostgreSQL** managed no Render — copie a `DATABASE_URL`
-2. Crie um **Web Service** para o backend apontando para `./backend/Dockerfile`
-3. Crie um **Static Site** para o frontend com build command `pnpm build`, publish dir `dist` e variável `VITE_API_URL=https://sua-api.onrender.com`
+| Serviço | Plataforma | URL |
+|---------|-----------|-----|
+| Frontend | Vercel | https://meet-room-delta.vercel.app |
+| Backend | Render | https://meetroom-backend-85ql.onrender.com |
+| Banco de dados | Render (PostgreSQL) | — |
+
+O usuário admin padrão já é criado automaticamente via migration de seed na primeira inicialização:
+
+| Campo | Valor |
+|-------|-------|
+| E-mail | `admin@meetroom.com` |
+| Senha | `12345678` |
+
+### Render (backend + banco)
+
+1. Crie um **PostgreSQL** no Render — copie a `Internal Database URL`
+2. Crie um **Web Service** com as configurações:
+   - Root Directory: `backend`
+   - Build Command: `npm install -g pnpm && pnpm install && pnpm build`
+   - Start Command: `node dist/main`
+3. Adicione as variáveis de ambiente:
+
+| Variável | Valor |
+|----------|-------|
+| `DATABASE_URL` | URL interna do PostgreSQL |
+| `JWT_SECRET` | string longa e aleatória |
+| `JWT_EXPIRES_IN` | `7d` |
+| `NODE_ENV` | `production` |
+| `FRONTEND_URL` | URL do projeto na Vercel |
+
+As migrations rodam automaticamente no startup em produção.
+
+### Vercel (frontend)
+
+1. Importe o repositório na Vercel
+2. Defina o **Root Directory** como `frontend`
+3. Adicione a variável de ambiente:
+
+| Variável | Valor |
+|----------|-------|
+| `VITE_API_URL` | URL do Web Service no Render |
