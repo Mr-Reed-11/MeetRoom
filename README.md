@@ -2,14 +2,9 @@
 
 Projeto acadêmico desenvolvido para a disciplina de **Desenvolvimento Web** — Pós-graduação Lato Sensu em Desenvolvimento de Sistemas Computacionais, IFTO Campus Araguatins.
 
-## Equipe
+## Autor
 
-| Nome | Função |
-|------|--------|
-| Francisco Jorge Pires | Gerente de Projeto |
-| Vitor Cesar Gonçalves Ornelas | Desenvolvedor Full Stack |
-| Ananda Máyra Afonso Ferreira | Administradora de Banco de Dados |
-| Aline Ribeiro Alves | Analista de QA |
+**Vitor Cesar Gonçalves Ornelas** — Desenvolvedor Full Stack
 
 ---
 
