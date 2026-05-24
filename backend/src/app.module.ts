@@ -23,6 +23,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
         url: config.get<string>('DATABASE_URL'),
         entities: [User, Room, Booking],
         synchronize: config.get<string>('NODE_ENV') !== 'production',
+        dropSchema: config.get<string>('RESET_DB') === 'true',
         migrations: [__dirname + '/migrations/*{.ts,.js}'],
         migrationsRun: config.get<string>('NODE_ENV') === 'production',
       }),
