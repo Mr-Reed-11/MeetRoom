@@ -20,8 +20,13 @@ export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
   @Get()
-  findAll(@CurrentUser() user: any) {
+  findByUser(@CurrentUser() user: any) {
     return this.bookingsService.findByUser(user.sub);
+  }
+
+  @Get('all')
+  findAll() {
+    return this.bookingsService.findAll();
   }
 
   @Get(':id')

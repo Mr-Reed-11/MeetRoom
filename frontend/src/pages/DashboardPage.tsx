@@ -30,7 +30,7 @@ export function DashboardPage() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    api.get<Booking[]>('/bookings').then(setBookings).catch(() => setBookings([]));
+    api.get<Booking[]>('/bookings/all').then(setBookings).catch(() => setBookings([]));
     api.get<Room[]>('/rooms').then(setRooms).catch(() => setRooms([]));
   }, []);
 
@@ -51,7 +51,7 @@ export function DashboardPage() {
   function prevMonth() { setCurrentDate(new Date(year, month - 1, 1)); }
   function nextMonth() { setCurrentDate(new Date(year, month + 1, 1)); }
   function handleDayClick(day: number) { setSelectedDate(new Date(year, month, day)); }
-  function refreshBookings() { api.get<Booking[]>('/bookings').then(setBookings).catch(() => {}); }
+  function refreshBookings() { api.get<Booking[]>('/bookings/all').then(setBookings).catch(() => {}); }
 
   const today = new Date();
 
